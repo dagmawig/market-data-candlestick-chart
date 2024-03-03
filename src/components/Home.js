@@ -21,7 +21,7 @@ function Home() {
         },
         title: {
           text: 'Stock Price',
-          align: 'center'
+          align: 'left'
         },
         xaxis: {
           type: 'date'
@@ -39,8 +39,16 @@ function Home() {
       };
 
     return (
-        <div>
-            <Chart type='candlestick' width={1000} height='400' series={series} options={options} />
+        <div className='flex flex-col space-y-5 p-2'>
+            <div className='text-center'>
+                STOCK PRICE CANDLESTICK CHART
+            </div>
+            <div>
+            <Chart type='candlestick' width={'100%'} height='400' series={series} options={options} />
+            </div>
+            <div className='font-bold font-serif' >
+                fdgdfgfdg
+            </div>
         </div>
     )
 }
