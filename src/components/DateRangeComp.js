@@ -22,7 +22,7 @@ export default function DateRangeComp() {
             onChange={handleSelect}
             maxDate={new Date()}
             retainEndDateOnFirstSelection={true}
-            months={2}
+            months={1}
             direction="horizontal"
         />
     )
