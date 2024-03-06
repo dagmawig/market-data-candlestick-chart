@@ -1,27 +1,20 @@
 import Chart from 'react-apexcharts';
+import { useSelector } from 'react-redux';
 
+export default function ChartComp({}) {
 
-export default function ChartComp({ data }) {
+    const stateSelector = useSelector((state)=> state.candle);
+    
+    const data = stateSelector.candleData;
 
-    let series = [
-        {
-            data: data.data.Date.map((date, index) => {
-                //console.log(new Date(date).toDateString())
-                //let formattedDate = new Date(date).toISOString().split('T')[0];
-                return {
-                    x: new Date(date).toDateString(),
-                    y: [Math.round(data.data.Open[index] * 100) / 100, Math.round(data.data.High[index] * 100) / 100, Math.round(data.data.Low[index] * 100) / 100, Math.round(data.data.Close[index] * 100) / 100]
-                }
-            })
-        }
-    ];
+    let series = stateSelector.series;
 
     let options = {
         chart: {
             type: 'candlestick',
         },
         title: {
-            text: 'Stock Price',
+            text: `${data.Symbol} Stock Price`,
             align: 'left'
         },
         xaxis: {

@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import ModalComp from './components/Modal';
+import store from './components/store';
+import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>, <ModalComp/>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
 );
 
