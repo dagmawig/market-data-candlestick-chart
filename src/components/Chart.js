@@ -15,7 +15,12 @@ export default function ChartComp({}) {
         },
         title: {
             text: `${data.Symbol} Stock Price`,
-            align: 'left'
+            align: 'left',
+            style: {
+                color: "#3B82F6",
+                fontFamily: "Courier",
+                fontSize: '26px'
+            }
         },
         xaxis: {
             type: 'date'
