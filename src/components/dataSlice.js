@@ -6,15 +6,20 @@ const initialState = {
     candleData: {
         Date: [],
         Open: [],
-        High:[],
+        High: [],
         Low: [],
         Close: [],
         Volume: [],
         Symbol: "'Ticker Symbol'"
     },
     series: [{
-        date:[]
+        date: []
     }],
+    dateRange: {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: 'selection',
+    },
 }
 
 //defining reducers
@@ -30,12 +35,14 @@ export const dataSlice = createSlice({
         },
         setSeries: (state, action) => {
             state.series = action.payload;
-        }
-
+        },
+        setRange: (state, action) => {
+            state.dateRange = action.payload;
+        },
     }
 });
 
 //action creators generated for each case reducer function
-export const {setCandleData, setLoading, setSeries} = dataSlice.actions;
+export const { setCandleData, setLoading, setSeries, setRange } = dataSlice.actions;
 
 export default dataSlice.reducer;

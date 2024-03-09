@@ -2,18 +2,20 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 import { useState } from 'react';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { setRange } from './dataSlice';
 
 export default function DateRangeComp() {
-    const [dateRange, setDateRange] = useState({
-        startDate: new Date(),
-        endDate: new Date(),
-        key: 'selection',
-    })
+   
+    const stateSelector = useSelector(state=>state.candle);
+    const dispatch = useDispatch();
+
+    const dateRange = stateSelector.dateRange;
+    
 
     function handleSelect(ranges) {
-        console.log(ranges)
-        setDateRange(ranges.selection);
+        console.log(ranges);
+        dispatch(setRange(ranges.selection));
     }
 
     return (
