@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Modal from 'react-modal';
 import DateRangeComp from './DateRangeComp';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCandleData, setRange, setSeries } from './dataSlice';
+import { setCandleData, setLoading, setRange, setSeries } from './dataSlice';
 import axios from 'axios';
 import calcSeries from './calcSeries';
 
@@ -58,13 +58,15 @@ export default function ModalComp({ }) {
 
             if (fromString === toString) alert("please pick different start and end dates!");
             else {
+                dispatch(setLoading(true));
                 fetchStock(pickedTicker.trim(), fromString, toString).then(resp => {
                     if (resp.data?.success) {
                         dispatch(setCandleData(resp.data.data));
                         dispatch(setSeries(calcSeries(resp.data.data)));
                         closeModal();
                     }
-                    else alert("error fecthing stock data!")
+                    else alert("error fecthing stock data!");
+                    dispatch(setLoading(false));
                 });
             }
         }
