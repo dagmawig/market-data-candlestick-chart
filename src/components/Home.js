@@ -11,7 +11,7 @@ function Home() {
 
     const dispatch = useDispatch();
 
-    async function loadStock(ticker, d1, d2) {
+    async function loadStock() {
         let dateTo = new Date();
         let dateFrom = new Date(dateTo - (2.628 * Math.pow(10, 9)));
         let to = dateTo.toISOString().split('T')[0];
@@ -19,7 +19,6 @@ function Home() {
 
         const API1 = process.env.REACT_APP_API;
         let url = `${API1}?from=${from}&to=${to}&format=json&human=true&dateformat=timestamp`;
-
         let res = await axios.get(url);
         return res;
     }
@@ -30,7 +29,16 @@ function Home() {
             dispatch(setCandleData(resp.data));
             dispatch(setSeries(calcSeries(resp.data)));
         }
+        else if (resp.status===404 ) {
+            resp.data.Symbol = 'AAPL';
+            dispatch(setCandleData(data.data));
+            dispatch(setSeries(calcSeries(data.data)));
+        }
         else alert("error fetching sample stock data");
+    }).catch(err=>{
+        console.log(err);
+        dispatch(setCandleData(data.data));
+        dispatch(setSeries(calcSeries(data.data)));
     })
 
     return (

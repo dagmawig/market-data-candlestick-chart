@@ -67,6 +67,10 @@ export default function ModalComp({ }) {
                     }
                     else alert("error fecthing stock data!");
                     dispatch(setLoading(false));
+                }).catch(err => {
+                    console.log(err);
+                    alert(err.message);
+                    dispatch(setLoading(false));
                 });
             }
         }
@@ -76,7 +80,9 @@ export default function ModalComp({ }) {
         const API2 = process.env.REACT_APP_API_TWO;
 
         let url = `${API2}?ticker=${ticker}&d1=${d1}&d2=${d2}`;
-        let res = await axios.get(url);
+        
+        let res = await axios.get(url, { headers: { Accept: '*/*', 'Content-Type': "application/json" } });
+
         return res;
     }
 
