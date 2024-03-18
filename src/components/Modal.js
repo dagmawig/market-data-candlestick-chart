@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCandleData, setLoading, setRange, setSeries } from './dataSlice';
 import axios from 'axios';
 import calcSeries from './calcSeries';
+import fetchCandles from './fetchCandles';
 
 const customStyles = {
     content: {
@@ -60,6 +61,7 @@ export default function ModalComp({ }) {
             else {
                 dispatch(setLoading(true));
                 fetchStock(pickedTicker.trim(), fromString, toString).then(resp => {
+                    console.log(resp)
                     if (resp.data?.success) {
                         dispatch(setCandleData(resp.data.data));
                         dispatch(setSeries(calcSeries(resp.data.data)));
@@ -77,13 +79,25 @@ export default function ModalComp({ }) {
     }
 
     async function fetchStock(ticker, d1, d2) {
-        const API2 = process.env.REACT_APP_API_TWO;
+        // const API2 = process.env.REACT_APP_API_TWO;
 
-        let url = `${API2}?ticker=${ticker}&d1=${d1}&d2=${d2}`;
+        // let url = `${API2}?ticker=${ticker}&d1=${d1}&d2=${d2}`;
         
-        let res = await axios.get(url, { headers: { Accept: '*/*', 'Content-Type': "application/json" } });
+        // let res = await axios.get(url, { headers: { Accept: '*/*', 'Content-Type': "application/json" } });
+
+        // return res;
+
+        let res = await fetchCandles(ticker.trim(), d1, d2).then(candleObj=> {
+            console.log("candleObj: ", candleObj);
+            if(candleObj) {
+                candleObj.Symbol = ticker.trim().toUpperCase();
+                return {data:{success: true, data: candleObj}};
+            }
+            else return {data:{success: false}}
+        });
 
         return res;
+
     }
 
     return (
